@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Movie Collection</title>
+        <link rel="stylesheet" href="index.css">
+    </head>
+
+    <body>
+       <header id="title-bar">
+           <p id="movie-count">Total Movies: 0</p>
+           <input id="list-title" placeholder="My Movie List"></input>
+           <button id="reset-button">Reset List</button>
+       </header> 
+
+        <main>
+            <div id="lists">
+                <section class="movie-list" id="backlog">
+                    <div class="movie">
+                        <p>Movie Name</p>
+                    </div>
+                    <div class="add-movie">
+                        <button>+</button>
+                    </div>
+                </section>
+                <section class="movie-list" id="watched"></section>
+                <section class="movie-list" id="wishlist"></section>
+            </div>
+        </main>
+
+        <script src="script.js"></script>
+    </body>
+</html>
