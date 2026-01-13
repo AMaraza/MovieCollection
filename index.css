@@ -36,7 +36,7 @@
 .movie-list {
     border: 2px solid black;
     width: 30%;
-    height: 500px;
+    height: fit-content;
     border-radius: 10px;
     padding: 0.5em;
     display: grid;
@@ -44,7 +44,7 @@
 }
 
 .add-movie {
-    height: 45%;
+    height: 250px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -59,16 +59,18 @@
 }
 
 .movie {
-    height: 45%;
+    height: 250px;
     display: flex;
-    justify-content:center;
+    justify-content:space-evenly;
     align-items: center;
+    flex-direction: column;
     width: 3em;
     border: 2px solid black;
+    cursor: move;
 }
 
-.movie p {
-    writing-mode: vertical-rl;
+.movie.dragging {
+    pointer-events: none;
 }
 
 .add-button{
@@ -79,7 +81,8 @@
     transform: rotate(90deg);
     font-size: 1em;
     border: none;
-    text-align: center;
+    text-align: left;
+    width: fit-content;
 }
 
 .movie-title:hover{
@@ -98,4 +101,9 @@
     width: 30%;
     text-align: center;
     font-size: 2em;
+}
+
+.remove-button {
+    width: 100%;
+    height: 15%;
 }
