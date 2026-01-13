@@ -4,6 +4,8 @@ const movieCount = document.querySelector("#movie-count")
 let totalMovies = 0
 let draggables = document.querySelectorAll('.movie')
 const lists = document.querySelectorAll('.movie-list')
+const trashList = document.querySelector('#trash')
+console.log(trashList)
 
 function AddMovie(buttonElement){
     const addMovie = buttonElement.parentNode;
@@ -14,17 +16,31 @@ function AddMovie(buttonElement){
     newElement.appendChild(newParagraph);
     newElement.classList.add("movie");
     newElement.draggable = true;
-    addMovie.before(newElement);
+    addMovie.after(newElement);
     totalMovies++;
     movieCount.textContent = `Total Movies: ${totalMovies}`; 
     draggables = document.querySelectorAll('.movie');
     draggables.forEach(draggable => {
         draggable.addEventListener('dragstart', () => {
             draggable.classList.add('dragging');
+            trashList.style.display = "flex";
         })
 
         draggable.addEventListener('dragend', () => {
            draggable.classList.remove('dragging'); 
+            trashList.style.display = "none";
+            if (trashList.children.length > 1) {
+                const childrenArray = Array.from(trashList.children);
+
+                childrenArray.forEach(child => {
+                    if (child.classList.contains("movie")) {
+                        totalMovies--;
+                        movieCount.textContent = `Total Movies: ${totalMovies}`;
+                        trashList.removeChild(child);
+                    }
+                })
+            }
+            console.log(trashList.children);
         })
     })
 }
@@ -37,8 +53,14 @@ lists.forEach(container => {
         const elementBelow = document.elementFromPoint(e.clientX, e.clientY);
         const movie = elementBelow?.closest('.movie:not(.dragging)');
 
-        if (!movie) {
+        if (!movie && container.id != "trash") {
             container.appendChild(draggable);
+            draggable.style.display = "flex";
+            return;
+        }
+        else if(!movie && container.id == "trash") {
+            container.appendChild(draggable);
+            draggable.style.display = "none";
             return;
         }
 
