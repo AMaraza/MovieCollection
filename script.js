@@ -18,14 +18,15 @@ function AddMovie(buttonElement = undefined, name = "Movie Name", parent = undef
     if (buttonElement != undefined) {
         let addMovie = buttonElement.parentNode;
         addMovie.after(newElement);
+        totalMovies++;
     }
     else {
         let addMovie = document.querySelector(`#${parent}`);
         if (addMovie != null) {
             addMovie.appendChild(newElement);
+            totalMovies++;
         }
     }
-    totalMovies++;
     movieCount.textContent = `Total Movies: ${totalMovies}`; 
     draggables = document.querySelectorAll('.movie');
     draggables.forEach(draggable => {
@@ -44,6 +45,7 @@ function AddMovie(buttonElement = undefined, name = "Movie Name", parent = undef
                     if (child.classList.contains("movie")) {
                         totalMovies--;
                         movieCount.textContent = `Total Movies: ${totalMovies}`;
+                        UnloadMovie(child.querySelector('input').value);
                         trashList.removeChild(child);
                     }
                 })
@@ -88,6 +90,7 @@ function ResetMovies(){
     });
     totalMovies = 0;
     movieCount.textContent = `Total Movies: ${totalMovies}`;
+    localStorage.clear();
 }
 
 function getDragAfterElement(container, x, y) {
@@ -159,9 +162,20 @@ function SaveMovies() {
 
 function LoadMovies() {
     Object.entries(localStorage).forEach(([key]) => {
-        const movie = JSON.parse(localStorage.getItem(key));
-        AddMovie(undefined, movie.movieName, movie.parentList);
+        if (key != "title") {
+            const movie = JSON.parse(localStorage.getItem(key));
+            AddMovie(undefined, movie.movieName, movie.parentList);
+        }
+        else {
+            const websiteTitle = document.querySelector('#list-title').value;
+            const websiteTitleStorage = JSON.parse(localStorage.getItem("title"));
+            websiteTitle.value = websiteTitleStorage.value;
+        }
     })
+}
+
+function UnloadMovie(movieName) {
+    localStorage.removeItem(movieName);
 }
 
 window.addEventListener('DOMContentLoaded', e => {
