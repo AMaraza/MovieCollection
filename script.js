@@ -7,16 +7,24 @@ const lists = document.querySelectorAll('.movie-list')
 const trashList = document.querySelector('#trash')
 console.log(trashList)
 
-function AddMovie(buttonElement){
-    const addMovie = buttonElement.parentNode;
+function AddMovie(buttonElement = undefined, name = "Movie Name", parent = undefined){
     const newElement = document.createElement('div');
     const newParagraph = document.createElement('input');
-    newParagraph.value = "Movie Name";
+    newParagraph.value = name;
     newParagraph.classList.add("movie-title");
     newElement.appendChild(newParagraph);
     newElement.classList.add("movie");
     newElement.draggable = true;
-    addMovie.after(newElement);
+    if (buttonElement != undefined) {
+        let addMovie = buttonElement.parentNode;
+        addMovie.after(newElement);
+    }
+    else {
+        let addMovie = document.querySelector(`#${parent}`);
+        if (addMovie != null) {
+            addMovie.appendChild(newElement);
+        }
+    }
     totalMovies++;
     movieCount.textContent = `Total Movies: ${totalMovies}`; 
     draggables = document.querySelectorAll('.movie');
@@ -40,7 +48,6 @@ function AddMovie(buttonElement){
                     }
                 })
             }
-            console.log(trashList.children);
         })
     })
 }
@@ -113,14 +120,15 @@ function PickMovie(buttonElement) {
     const childArray= Array.from(allChildren).filter(child => {
         return child.classList.contains('movie');
     })
-    console.log(childArray)
-    let randomChoice = getRandomInt(0, childArray.length)
+    if (childArray.length > 0) {
 
-    childArray.forEach(child => {
-        child.style.backgroundColor = "white";
-    })
-    childArray[randomChoice].style.backgroundColor = "lightgreen";
-    
+        let randomChoice = getRandomInt(0, childArray.length)
+
+        childArray.forEach(child => {
+            child.style.backgroundColor = "white";
+        })
+        childArray[randomChoice].style.backgroundColor = "lightgreen";
+    }
 }
 
 function getRandomInt(min, max) {
@@ -128,3 +136,39 @@ function getRandomInt(min, max) {
     const maxFloored = Math.floor(max);
     return Math.floor(Math.random() * (maxFloored-minCeiled) + minCeiled);
 }
+
+
+function SaveMovies() {
+    lists.forEach(list => {
+        const childArray = Array.from(list.children).filter(child => {
+            return child.classList.contains('movie');
+        })
+
+        childArray.forEach(child => {
+            const input = child.querySelector('input');
+            const movieName = input.value;
+            const movieObject = {movieName: movieName, parentList: list.id};
+            localStorage.setItem(movieName, JSON.stringify(movieObject));
+        })
+    })
+
+    const documentTitle = document.querySelector('#list-title');
+    localStorage.setItem("title", JSON.stringify(documentTitle.value));
+    
+}
+
+function LoadMovies() {
+    Object.entries(localStorage).forEach(([key]) => {
+        const movie = JSON.parse(localStorage.getItem(key));
+        AddMovie(undefined, movie.movieName, movie.parentList);
+    })
+}
+
+window.addEventListener('DOMContentLoaded', e => {
+    LoadMovies();
+})
+
+window.addEventListener('beforeunload', function(e) {
+    e.preventDefault;
+    SaveMovies();
+})
