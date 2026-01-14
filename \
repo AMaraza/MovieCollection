@@ -114,12 +114,7 @@ function PickMovie(buttonElement) {
         return child.classList.contains('movie');
     })
     console.log(childArray)
-    let randomChoice = getRandomInt(0, childArray.length)
-
-    childArray.forEach(child => {
-        child.style.backgroundColor = "white";
-    })
-    childArray[randomChoice].style.backgroundColor = "lightgreen";
+    let randomChoice = getRandomInt(0, childArray.length+1)
     
 }
 

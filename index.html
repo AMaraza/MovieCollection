@@ -10,7 +10,7 @@
        <header id="title-bar">
            <p id="movie-count">Total Movies: 0</p>
            <input id="list-title" value="My Movie List"></input>
-           <button id="reset-button" onclick="ResetMovies()">Reset List</button>
+           <button id="reset-button" onclick="ResetMovies()">Reset Lists</button>
        </header> 
 
         <main>
@@ -25,16 +25,25 @@
             </div>
             <div id="lists">
                 <section class="movie-list" id="backlog">
+                    <div class="random-picker">
+                        <button class="picker-button" id="backlog-button" onclick="PickMovie(this)">Pick Movie</button>
+                    </div>
                     <div class="add-movie">
                         <button class="add-button" onclick="AddMovie(this)">+</button>
                     </div>
                 </section>
                 <section class="movie-list" id="watched">
+                    <div class="random-picker">
+                        <button class="picker-button" id="backlog-button" onclick="PickMovie(this)">Pick Movie</button>
+                    </div>
                     <div class="add-movie">
                         <button class="add-button" onclick="AddMovie(this)">+</button>
                     </div>
                 </section>
                 <section class="movie-list" id="wishlist">
+                    <div class="random-picker">
+                        <button class="picker-button" id="backlog-button" onclick="PickMovie(this)">Pick Movie</button>
+                    </div>
                     <div class="add-movie">
                         <button class="add-button" onclick="AddMovie(this)">+</button>
                     </div>

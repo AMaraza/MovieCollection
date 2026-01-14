@@ -58,6 +58,22 @@
     height: 20%;
 }
 
+.random-picker {
+    height: 250px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 3em;
+    border: 2px solid black;
+}
+
+.picker-button {
+    width: 90%;
+    height: 20%;
+    cursor: pointer;
+}
+
 .movie {
     height: 250px;
     display: flex;
