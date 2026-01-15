@@ -5,7 +5,6 @@ let totalMovies = 0
 let draggables = document.querySelectorAll('.movie')
 const lists = document.querySelectorAll('.movie-list')
 const trashList = document.querySelector('#trash')
-console.log(trashList)
 
 function AddMovie(buttonElement = undefined, name = "Movie Name", parent = undefined){
     const newElement = document.createElement('div');
@@ -51,6 +50,35 @@ function AddMovie(buttonElement = undefined, name = "Movie Name", parent = undef
                 })
             }
         })
+    })
+}
+
+function SortMovies(buttonElement) {
+    const parentElement = buttonElement.parentNode.parentNode;
+
+    const movieArray = Array.from(parentElement.children).filter(child => {
+        return child.classList.contains('movie');
+    })
+
+    movieArray.sort((a, b) => {
+        const textA = a.querySelector('input').value.trim().toLowerCase();
+        const textB = b.querySelector('input').value.trim().toLowerCase();
+
+        if (textA < textB) {
+            return -1;
+        }
+        if (textA > textB) {
+            return 1;
+        }
+        return 0;
+    })
+    if (buttonElement.id == "z") {
+        movieArray.reverse();
+    }
+
+    movieArray.forEach(movie => {
+        parentElement.removeChild(movie);
+        parentElement.appendChild(movie);
     })
 }
 
