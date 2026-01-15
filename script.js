@@ -156,9 +156,9 @@ function PickMovie(buttonElement) {
         let randomChoice = getRandomInt(0, childArray.length)
 
         childArray.forEach(child => {
-            child.style.backgroundColor = "white";
+            child.style.border = "2px solid var(--border)";
         })
-        childArray[randomChoice].style.backgroundColor = "lightgreen";
+        childArray[randomChoice].style.border = "2px solid var(--accent)"
     }
 }
 
